@@ -7,7 +7,7 @@ import { NotificationTeaser } from './components/NotificationTeaser'
 import { PromoGrid } from './components/PromoGrid'
 import { usePromos } from './hooks/usePromos'
 import type { FilterTab } from './types/promo'
-import { getExpirationState } from './utils/date'
+
 
 function App() {
   const { promos, loading, error } = usePromos()

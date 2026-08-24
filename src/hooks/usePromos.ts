@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import type { Promo } from '../types/promo'
 
+interface EdgeFunctionResponse {
+  success: boolean
+  data: Promo[]
+  count: number
+}
+
 export function usePromos() {
   const [promos, setPromos] = useState<Promo[]>([])
   const [loading, setLoading] = useState(true)
@@ -9,17 +15,24 @@ export function usePromos() {
 
   useEffect(() => {
     async function fetchPromos() {
-      const { data, error: err } = await supabase
-        .from('promos')
-        .select('*')
-        .order('created_at', { ascending: false })
+      try {
+        const { data, error: err } = await supabase.functions.invoke<EdgeFunctionResponse>(
+          'promos-batch',
+          { method: 'GET' }
+        )
 
-      if (err) {
-        setError(err.message)
-      } else {
-        setPromos(data ?? [])
+        if (err) {
+          setError(err.message)
+        } else if (data && data.success && Array.isArray(data.data)) {
+          setPromos(data.data)
+        } else {
+          setError('Respuesta inválida de la Edge Function')
+        }
+      } catch (err: any) {
+        setError(err.message || 'Error al conectar con la Edge Function')
+      } finally {
+        setLoading(false)
       }
-      setLoading(false)
     }
 
     fetchPromos()
@@ -27,3 +40,4 @@ export function usePromos() {
 
   return { promos, loading, error }
 }
+
