@@ -13,9 +13,9 @@ export function TimeProgressBar({ createdAt, expiresAt, state }: Props) {
   const colors = STATE_COLORS[state]
 
   return (
-    <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+    <div className="h-1 w-full overflow-hidden bg-white/10">
       <div
-        className={`h-full rounded-full transition-all duration-1000 ${colors.bar}`}
+        className={`h-full transition-all duration-1000 ${colors.bar}`}
         style={{ width: `${percent}%` }}
       />
     </div>

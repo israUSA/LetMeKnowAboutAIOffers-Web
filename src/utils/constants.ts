@@ -3,30 +3,41 @@ import type { ExpirationState } from '../types/promo'
 export const URGENT_THRESHOLD_DAYS = 7
 export const WARNING_THRESHOLD_DAYS = 30
 
-export const STATE_COLORS: Record<ExpirationState, { bg: string; text: string; border: string; bar: string }> = {
+export const STATE_COLORS: Record<
+  ExpirationState,
+  { bg: string; text: string; border: string; bar: string; glow: string; dot: string }
+> = {
   permanent: {
-    bg: 'bg-emerald-50',
-    text: 'text-emerald-700',
-    border: 'border-emerald-200',
-    bar: 'bg-emerald-500',
+    bg: 'bg-emerald-400/10',
+    text: 'text-emerald-300',
+    border: 'border-emerald-400/25',
+    bar: 'bg-gradient-to-r from-emerald-400 to-teal-300',
+    glow: 'hover:shadow-emerald-500/20',
+    dot: 'bg-emerald-400',
   },
   comfortable: {
-    bg: 'bg-blue-50',
-    text: 'text-blue-700',
-    border: 'border-blue-200',
-    bar: 'bg-blue-500',
+    bg: 'bg-sky-400/10',
+    text: 'text-sky-300',
+    border: 'border-sky-400/25',
+    bar: 'bg-gradient-to-r from-sky-400 to-cyan-300',
+    glow: 'hover:shadow-sky-500/20',
+    dot: 'bg-sky-400',
   },
   warning: {
-    bg: 'bg-amber-50',
-    text: 'text-amber-700',
-    border: 'border-amber-200',
-    bar: 'bg-amber-500',
+    bg: 'bg-amber-400/10',
+    text: 'text-amber-300',
+    border: 'border-amber-400/25',
+    bar: 'bg-gradient-to-r from-amber-400 to-orange-300',
+    glow: 'hover:shadow-amber-500/20',
+    dot: 'bg-amber-400',
   },
   urgent: {
-    bg: 'bg-red-50',
-    text: 'text-red-700',
-    border: 'border-red-200',
-    bar: 'bg-red-500',
+    bg: 'bg-rose-400/12',
+    text: 'text-rose-300',
+    border: 'border-rose-400/30',
+    bar: 'bg-gradient-to-r from-rose-500 to-red-400',
+    glow: 'hover:shadow-rose-500/25',
+    dot: 'bg-rose-400',
   },
 }
 
