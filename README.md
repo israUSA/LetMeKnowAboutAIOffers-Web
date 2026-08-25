@@ -1,3 +1,26 @@
+# LetMeKnowAboutAIOffers
+
+## Configuración
+
+La app necesita sus variables de entorno para cargar datos. Antes del primer `npm run dev`:
+
+```bash
+cp .env.example .env
+```
+
+Y completa los valores:
+
+| Variable | Descripción |
+| --- | --- |
+| `VITE_SUPABASE_URL` | URL del proyecto de Supabase |
+| `VITE_SUPABASE_ANON_KEY` | Clave anónima del proyecto |
+
+`.env` está en `.gitignore`, así que **no aparece en un worktree nuevo**: cada worktree necesita el suyo. Sin él la app no rompe, pero muestra un estado de error en vez de las ofertas.
+
+Vite lee `.env` solo al arrancar: si lo creas con el dev server ya corriendo, reinícialo.
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.

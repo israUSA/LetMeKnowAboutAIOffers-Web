@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { supabase, supabaseConfigError } from '../lib/supabase'
 import type { Promo } from '../types/promo'
 
 interface EdgeFunctionResponse {
@@ -10,13 +10,18 @@ interface EdgeFunctionResponse {
 
 export function usePromos() {
   const [promos, setPromos] = useState<Promo[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  // Sin configuración no hay nada que pedir: arrancamos ya en estado de error.
+  const [loading, setLoading] = useState(supabaseConfigError === null)
+  const [error, setError] = useState<string | null>(supabaseConfigError)
 
   useEffect(() => {
+    if (!supabase) return
+
+    const client = supabase
+
     async function fetchPromos() {
       try {
-        const { data, error: err } = await supabase.functions.invoke<EdgeFunctionResponse>(
+        const { data, error: err } = await client.functions.invoke<EdgeFunctionResponse>(
           'promos-batch',
           { method: 'GET' }
         )
