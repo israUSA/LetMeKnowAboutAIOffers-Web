@@ -24,7 +24,7 @@ export function FilterTabs({ activeTab, onTabChange, counts }: Props) {
             type="button"
             onClick={() => onTabChange(key)}
             aria-pressed={active}
-            className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium backdrop-blur-xl transition-all duration-300
+            className={`group inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-medium backdrop-blur-xl transition-all duration-300
               ${
                 active
                   ? 'bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/25 border border-white/10'
