@@ -1,4 +1,4 @@
-# LetMeKnowAboutAIOffers
+# LetMeKnowAboutStudentOffers
 
 ## Configuración
 
