@@ -11,7 +11,7 @@ export function Header() {
           </div>
           <span className="truncate font-display text-base sm:text-lg font-bold tracking-tight">
             <span className="text-gradient">LetMeKnow</span>
-            <span className="text-white">AboutAIOffers</span>
+            <span className="text-white">AboutStudentOffers</span>
           </span>
         </a>
 
