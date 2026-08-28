@@ -1,6 +1,13 @@
+import { useState } from 'react'
 import { ChevronDown, ExternalLink } from 'lucide-react'
 import type { Promo } from '../types/promo'
-import { COMPANY_COLORS, STATE_COLORS } from '../utils/constants'
+import {
+  COMPANY_COLORS,
+  COMPANY_DOMAINS,
+  COMPANY_ICONS,
+  faviconUrl,
+  STATE_COLORS,
+} from '../utils/constants'
 import { getExpirationState } from '../utils/date'
 import { ExpirationBadge } from './ExpirationBadge'
 import { TimeProgressBar } from './TimeProgressBar'
@@ -18,6 +25,42 @@ export function PromoCard({ promo, index, expanded, onToggle }: Props) {
   const bgColor = COMPANY_COLORS[promo.company] ?? '#6366f1'
   const initial = promo.company.charAt(0).toUpperCase()
   const panelId = `promo-desc-${promo.id}`
+
+  // Cascada de logo: 1) Simple Icons, 2) favicon del dominio real, 3) inicial + color.
+  const brandIcon = COMPANY_ICONS[promo.company]
+  const domain = COMPANY_DOMAINS[promo.company]
+  const [faviconFailed, setFaviconFailed] = useState(false)
+  const showFavicon = !brandIcon && !!domain && !faviconFailed
+
+  const avatar = brandIcon ? (
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/95 shadow-lg ring-1 ring-inset ring-white/20">
+      <svg
+        viewBox="0 0 24 24"
+        role="img"
+        aria-label={promo.company}
+        className="h-7 w-7"
+      >
+        <path d={brandIcon.path} fill={`#${brandIcon.hex}`} />
+      </svg>
+    </div>
+  ) : showFavicon ? (
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white/95 shadow-lg ring-1 ring-inset ring-white/20">
+      <img
+        src={faviconUrl(domain)}
+        alt={promo.company}
+        loading="lazy"
+        className="h-7 w-7 object-contain"
+        onError={() => setFaviconFailed(true)}
+      />
+    </div>
+  ) : (
+    <div
+      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-base font-bold text-white shadow-lg ring-1 ring-inset ring-white/20"
+      style={{ backgroundColor: bgColor }}
+    >
+      {initial}
+    </div>
+  )
 
   return (
     <article
@@ -40,12 +83,7 @@ export function PromoCard({ promo, index, expanded, onToggle }: Props) {
         aria-controls={panelId}
         className="flex w-full items-start gap-3.5 p-5 pb-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400/60 focus-visible:ring-inset"
       >
-        <div
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-base font-bold text-white shadow-lg ring-1 ring-inset ring-white/20"
-          style={{ backgroundColor: bgColor }}
-        >
-          {initial}
-        </div>
+        {avatar}
 
         <div className="min-w-0 flex-1">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
